@@ -1,0 +1,8 @@
+spring.cloud.stream:
+  function:
+    definition: registraduriaProcessor
+  bindings:
+    registraduriaProcessor-in-0:
+      destination: solicitud-event
+    registraduriaProcessor-out-0:
+      destination: rnec-event

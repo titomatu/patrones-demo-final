@@ -1,0 +1,11 @@
+edu\patrones\demo\dto\RNECRequestDto.class
+edu\patrones\demo\event\centrales\CentralesEvent.class
+edu\patrones\demo\dto\SolicitudDto.class
+edu\patrones\demo\event\centrales\CentralesStatus.class
+edu\patrones\demo\dto\CentralesRequestDto.class
+edu\patrones\demo\event\rnec\RNECEvent.class
+edu\patrones\demo\event\solicitud\SolicitudStatus.class
+edu\patrones\demo\event\Event.class
+edu\patrones\demo\event\solicitud\SolicitudEvent.class
+edu\patrones\demo\dto\ClienteDto.class
+edu\patrones\demo\event\rnec\RNECStatus.class

@@ -1,0 +1,12 @@
+server:
+  port: 8085
+spring.cloud.stream:
+  function:
+    definition: solicitudSupplier;rnecEventConsumer;centralesEventConsumer
+  bindings:
+    solicitudSupplier-out-0:
+      destination: solicitud-event
+    rnecEventConsumer-in-0:
+      destination: rnec-event
+    centralesEventConsumer-in-0:
+      destination: centrales-event

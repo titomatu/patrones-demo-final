@@ -1,0 +1,8 @@
+spring.cloud.stream:
+  function:
+    definition: centralesProcessor
+  bindings:
+    centralesProcessor-in-0:
+      destination: solicitud-event
+    centralesProcessor-out-0:
+      destination: centrales-event
