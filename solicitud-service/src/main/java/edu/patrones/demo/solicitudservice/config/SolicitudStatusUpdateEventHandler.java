@@ -30,7 +30,6 @@ public class SolicitudStatusUpdateEventHandler {
 
     @Transactional
     public void updateSolicitud(final String id, Consumer<Solicitud> consumer){
-        System.out.println(">>>>>>>>>>>>>>>>>>> update solicitud ");
         this.repository
                 .findById(id)
                 .ifPresent(consumer.andThen(this::updateSolicitud));
