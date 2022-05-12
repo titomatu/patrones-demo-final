@@ -17,7 +17,7 @@ public class EventHandlersConfig {
     @Bean
     public Consumer<RNECEvent> rnecEventConsumer(){
         return rnecEvent -> {
-            orderEventHandler.updateOrder(rnecEvent.getRnecRequestDto().getNumeroSolicitud(), solicitud -> {
+            orderEventHandler.updateSolicitud(rnecEvent.getRnecRequestDto().getNumeroSolicitud(), solicitud -> {
                 solicitud.setRnecStatus(rnecEvent.getRnecStatus());
             });
         };
@@ -26,7 +26,7 @@ public class EventHandlersConfig {
     @Bean
     public Consumer<CentralesEvent> centralesEventConsumer(){
         return centralesEvent -> {
-            orderEventHandler.updateOrder(centralesEvent.getCentralesRequestDto().getNumeroSolicitud(), solicitud -> {
+            orderEventHandler.updateSolicitud(centralesEvent.getCentralesRequestDto().getNumeroSolicitud(), solicitud -> {
                 solicitud.setCentralesStatus(centralesEvent.getCentralesStatus());
             });
         };

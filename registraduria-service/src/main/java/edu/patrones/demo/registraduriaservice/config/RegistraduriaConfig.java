@@ -2,6 +2,7 @@ package edu.patrones.demo.registraduriaservice.config;
 
 import edu.patrones.demo.event.rnec.RNECEvent;
 import edu.patrones.demo.event.solicitud.SolicitudEvent;
+import edu.patrones.demo.event.solicitud.SolicitudStatus;
 import edu.patrones.demo.registraduriaservice.service.RNECService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -23,7 +24,11 @@ public class RegistraduriaConfig {
     }
 
     private Mono<RNECEvent> procesarRNEC(SolicitudEvent event){
-        return Mono.fromSupplier(() -> this.service.nuevaSolicitud(event));
+        if(event.getSolicitudStatus().equals(SolicitudStatus.SOLICITUD_CREADA)){
+            return Mono.fromSupplier(() -> this.service.nuevaSolicitud(event));
+        }
+
+        return Mono.fromRunnable(() -> this.service.nuevaSolicitud(event));
     }
 
 }
