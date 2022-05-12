@@ -1,0 +1,8 @@
+spring.cloud.stream:
+  function:
+    definition: aportesLineaProcessor
+  bindings:
+    aportesLineaProcessor-in-0:
+      destination: solicitud-event
+    aportesLineaProcessor-out-0:
+      destination: aportes-linea-event

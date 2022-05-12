@@ -9,6 +9,6 @@ import java.util.Optional;
 
 public interface SolicitudRepository extends JpaRepository<Solicitud, String> {
 
-    @Lock(LockModeType.PESSIMISTIC_READ)
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
     Optional<Solicitud> findById(String id);
 }

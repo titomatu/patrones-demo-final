@@ -1,5 +1,6 @@
 package edu.patrones.demo.solicitudservice.config;
 
+import edu.patrones.demo.event.aportes.AportesLineaEvent;
 import edu.patrones.demo.event.centrales.CentralesEvent;
 import edu.patrones.demo.event.rnec.RNECEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,15 @@ public class EventHandlersConfig {
         return centralesEvent -> {
             orderEventHandler.updateSolicitud(centralesEvent.getCentralesRequestDto().getNumeroSolicitud(), solicitud -> {
                 solicitud.setCentralesStatus(centralesEvent.getCentralesStatus());
+            });
+        };
+    }
+
+    @Bean
+    public Consumer<AportesLineaEvent> aportesLineaEventConsumer(){
+        return aportesLineaEvent -> {
+            orderEventHandler.updateSolicitud(aportesLineaEvent.getAportesLineaDto().getNumeroSolicitud(), solicitud -> {
+                solicitud.setAportesLineaStatus(aportesLineaEvent.getAportesLineaStatus());
             });
         };
     }

@@ -1,5 +1,7 @@
 package edu.patrones.demo.solicitudservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import edu.patrones.demo.event.aportes.AportesLineaStatus;
 import edu.patrones.demo.event.centrales.CentralesStatus;
 import edu.patrones.demo.event.rnec.RNECStatus;
 import edu.patrones.demo.event.solicitud.SolicitudStatus;
@@ -31,6 +33,7 @@ public class Solicitud {
             @JoinColumn(name="cliente_tipo_documento", referencedColumnName="tipo_documento"),
             @JoinColumn(name="cliente_numero_documento", referencedColumnName="numero_documento")
     })
+    @JsonIgnore
     private Cliente cliente;
 
     @Enumerated(EnumType.STRING)
@@ -45,4 +48,7 @@ public class Solicitud {
     @Column(name = "informacion_centrales")
     private CentralesStatus centralesStatus;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "aportes_en_linea")
+    private AportesLineaStatus aportesLineaStatus;
 }

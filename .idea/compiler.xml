@@ -10,12 +10,14 @@
         <module name="solicitud-service" />
         <module name="registraduria-service" />
         <module name="centrales-service" />
+        <module name="aportes-linea-service" />
         <module name="common-dto" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="aportes-linea-service" options="-parameters" />
       <module name="centrales-service" options="-parameters" />
       <module name="registraduria-service" options="-parameters" />
       <module name="solicitud-service" options="-parameters" />

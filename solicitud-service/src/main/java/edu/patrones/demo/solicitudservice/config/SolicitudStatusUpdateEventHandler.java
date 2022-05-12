@@ -2,6 +2,7 @@ package edu.patrones.demo.solicitudservice.config;
 
 import edu.patrones.demo.dto.ClienteDto;
 import edu.patrones.demo.dto.SolicitudDto;
+import edu.patrones.demo.event.aportes.AportesLineaStatus;
 import edu.patrones.demo.event.centrales.CentralesEvent;
 import edu.patrones.demo.event.centrales.CentralesStatus;
 import edu.patrones.demo.event.rnec.RNECEvent;
@@ -37,11 +38,16 @@ public class SolicitudStatusUpdateEventHandler {
     }
 
     private void updateSolicitud(Solicitud solicitud){
-        System.out.println(">>>>>>>>>>>>>>>>>>> update solicitud " + solicitud.getCentralesStatus() + "/" + solicitud.getRnecStatus());
-        if(Objects.isNull(solicitud.getCentralesStatus()) || Objects.isNull(solicitud.getRnecStatus()))
+        System.out.println(">>>>>>>>>>>>>>>>>>> update solicitud " + solicitud.getCentralesStatus() + "/" + solicitud.getRnecStatus()+"/"+solicitud.getAportesLineaStatus());
+        if(Objects.isNull(solicitud.getCentralesStatus())
+                || Objects.isNull(solicitud.getRnecStatus())
+                || Objects.isNull(solicitud.getAportesLineaStatus()))
             return;
 
-        var isComplete = RNECStatus.RNEC_COMPLETADO.equals(solicitud.getRnecStatus()) && CentralesStatus.CENTRALES_COMPLETADO.equals(solicitud.getCentralesStatus());
+        var isComplete = RNECStatus.RNEC_COMPLETADO.equals(solicitud.getRnecStatus())
+                && CentralesStatus.CENTRALES_COMPLETADO.equals(solicitud.getCentralesStatus())
+                && AportesLineaStatus.APORTES_LINEA_VALIDADO.equals(solicitud.getAportesLineaStatus());
+
         var solicitudStatus = isComplete ? SolicitudStatus.SOLICITUD_COMPLETA : SolicitudStatus.SOLICITUD_RECHAZADA;
         solicitud.setSolicitudStatus(solicitudStatus);
 
