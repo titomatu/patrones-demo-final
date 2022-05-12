@@ -2,7 +2,9 @@ package edu.patrones.demo.solicitudservice.config;
 
 import edu.patrones.demo.dto.ClienteDto;
 import edu.patrones.demo.dto.SolicitudDto;
+import edu.patrones.demo.event.centrales.CentralesEvent;
 import edu.patrones.demo.event.centrales.CentralesStatus;
+import edu.patrones.demo.event.rnec.RNECEvent;
 import edu.patrones.demo.event.rnec.RNECStatus;
 import edu.patrones.demo.event.solicitud.SolicitudStatus;
 import edu.patrones.demo.solicitudservice.model.Solicitud;
@@ -10,8 +12,10 @@ import edu.patrones.demo.solicitudservice.repository.SolicitudRepository;
 import edu.patrones.demo.solicitudservice.service.SolicitudStatusPublisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.Objects;
 import java.util.function.Consumer;
 
@@ -46,8 +50,6 @@ public class SolicitudStatusUpdateEventHandler {
             this.publisher.publishSolicitudEvent(convertEntityToDto(solicitud), solicitudStatus);
         }
     }
-
-
 
     private SolicitudDto convertEntityToDto(Solicitud solicitud) {
         ClienteDto clienteDto = new ClienteDto();
