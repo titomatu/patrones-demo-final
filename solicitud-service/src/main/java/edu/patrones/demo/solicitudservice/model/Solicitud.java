@@ -51,4 +51,10 @@ public class Solicitud {
     @Enumerated(EnumType.STRING)
     @Column(name = "aportes_en_linea")
     private AportesLineaStatus aportesLineaStatus;
+
+    @Column(name = "reportado_centrales")
+    private String reportado;
+
+    @Column(name = "promedio_aportes")
+    private Double promedioAportes;
 }

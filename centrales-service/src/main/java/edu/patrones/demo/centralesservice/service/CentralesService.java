@@ -24,12 +24,17 @@ public class CentralesService {
     public CentralesEvent nuevaSolicitud(SolicitudEvent solicitudEvent){
         SolicitudDto solicitudDto = solicitudEvent.getSolicitudDto();
 
-        CentralesRequestDto centralesRequestDto = new CentralesRequestDto(solicitudDto.getNumeroSolicitud());
+        CentralesRequestDto centralesRequestDto = new CentralesRequestDto();
+
+        centralesRequestDto.setNumeroSolicitud(solicitudEvent.getSolicitudDto().getNumeroSolicitud());
 
         Optional<Usuario> usuarioOpt = usuarioRepository.findById(new UsuarioId(solicitudDto.getClienteDto().getTipoDocumento(), solicitudDto.getClienteDto().getNumeroDocumento()));
 
         if(usuarioOpt.isPresent()){
             Usuario usuario = usuarioOpt.get();
+            centralesRequestDto.setReportado(usuario.getReportado());
+        } else {
+            centralesRequestDto.setReportado("X");
         }
 
         return new CentralesEvent(centralesRequestDto, CentralesStatus.CENTRALES_COMPLETADO);

@@ -9,4 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AportesLineaDto {
     private String numeroSolicitud;
+    private Double promedioAportes;
 }

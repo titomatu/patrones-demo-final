@@ -29,6 +29,7 @@ public class EventHandlersConfig {
         return centralesEvent -> {
             orderEventHandler.updateSolicitud(centralesEvent.getCentralesRequestDto().getNumeroSolicitud(), solicitud -> {
                 solicitud.setCentralesStatus(centralesEvent.getCentralesStatus());
+                solicitud.setReportado(centralesEvent.getCentralesRequestDto().getReportado());
             });
         };
     }
@@ -38,6 +39,7 @@ public class EventHandlersConfig {
         return aportesLineaEvent -> {
             orderEventHandler.updateSolicitud(aportesLineaEvent.getAportesLineaDto().getNumeroSolicitud(), solicitud -> {
                 solicitud.setAportesLineaStatus(aportesLineaEvent.getAportesLineaStatus());
+                solicitud.setPromedioAportes(aportesLineaEvent.getAportesLineaDto().getPromedioAportes());
             });
         };
     }

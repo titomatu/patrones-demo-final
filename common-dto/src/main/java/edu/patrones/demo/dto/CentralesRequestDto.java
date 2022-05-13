@@ -9,4 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CentralesRequestDto {
     private String numeroSolicitud;
+    private String reportado;
 }
