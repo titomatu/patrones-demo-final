@@ -4,7 +4,7 @@ import edu.patrones.demo.authservice.model.OTP;
 
 public interface OTPService {
 
-    OTP getOTP(String tipoDocumento, Long numeroDocumento, Integer otp);
+    OTP getOTP(String username);
 
     OTP saveOTP(OTP otp);
 }

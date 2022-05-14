@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Data
@@ -16,13 +13,30 @@ import java.util.Date;
 @Entity
 @Table(name = "otp")
 public class OTP {
+    private static final long OTP_VALID_DURATION = 5 * 60 * 1000;   // 5 minutes
 
-    @EmbeddedId
-    private OTPId id;
+    @Id
+    private String username;
 
-    @Column(name = "expires_in")
-    private Date expires_in;
+    @Column(name = "one_time_password")
+    private String password;
 
-    @Column(name = "vigente")
-    private Boolean vigente;
+    @Column(name = "otp_requested_time")
+    private Date otpRequestedTime;
+
+    public boolean isOTPRequired() {
+        if (this.getPassword() == null) {
+            return false;
+        }
+
+        long currentTimeInMillis = System.currentTimeMillis();
+        long otpRequestedTimeInMillis = this.otpRequestedTime.getTime();
+
+        if (otpRequestedTimeInMillis + OTP_VALID_DURATION < currentTimeInMillis) {
+            // OTP expires
+            return false;
+        }
+
+        return true;
+    }
 }
