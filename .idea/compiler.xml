@@ -7,18 +7,20 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="solicitud-service" />
         <module name="registraduria-service" />
-        <module name="estudio-solicitud-service" />
+        <module name="auth-service" />
         <module name="centrales-service" />
-        <module name="aportes-linea-service" />
         <module name="common-dto" />
+        <module name="solicitud-service" />
+        <module name="estudio-solicitud-service" />
+        <module name="aportes-linea-service" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="aportes-linea-service" options="-parameters" />
+      <module name="auth-service" options="-parameters" />
       <module name="centrales-service" options="-parameters" />
       <module name="estudio-solicitud-service" options="-parameters" />
       <module name="registraduria-service" options="-parameters" />
