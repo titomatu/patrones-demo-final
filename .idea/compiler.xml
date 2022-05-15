@@ -8,14 +8,20 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="registraduria-service" />
+        <module name="eureka-service" />
         <module name="auth-service" />
         <module name="centrales-service" />
         <module name="common-dto" />
         <module name="solicitud-service" />
         <module name="estudio-solicitud-service" />
+        <module name="hello-world" />
         <module name="aportes-linea-service" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="gateway-service" target="11" />
+      <module name="hellow-world" target="11" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
@@ -23,6 +29,10 @@
       <module name="auth-service" options="-parameters" />
       <module name="centrales-service" options="-parameters" />
       <module name="estudio-solicitud-service" options="-parameters" />
+      <module name="eureka-service" options="-parameters" />
+      <module name="gateway-service" options="-parameters" />
+      <module name="hello-world" options="-parameters" />
+      <module name="hellow-world" options="-parameters" />
       <module name="registraduria-service" options="-parameters" />
       <module name="solicitud-service" options="-parameters" />
     </option>
