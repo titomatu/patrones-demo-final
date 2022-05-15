@@ -21,6 +21,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="hellow-world" target="11" />
+      <module name="r2dbc" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -33,6 +34,7 @@
       <module name="gateway-service" options="-parameters" />
       <module name="hello-world" options="-parameters" />
       <module name="hellow-world" options="-parameters" />
+      <module name="r2dbc" options="-parameters" />
       <module name="registraduria-service" options="-parameters" />
       <module name="solicitud-service" options="-parameters" />
     </option>
