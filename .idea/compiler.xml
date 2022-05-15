@@ -17,6 +17,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="demo" target="11" />
       <module name="eureka-service" target="11" />
       <module name="gateway-service" target="11" />
       <module name="hello-world" target="11" />
@@ -29,6 +30,7 @@
       <module name="aportes-linea-service" options="-parameters" />
       <module name="auth-service" options="-parameters" />
       <module name="centrales-service" options="-parameters" />
+      <module name="demo" options="-parameters" />
       <module name="estudio-solicitud-service" options="-parameters" />
       <module name="eureka-service" options="-parameters" />
       <module name="gateway-service" options="-parameters" />

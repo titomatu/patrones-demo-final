@@ -4,23 +4,34 @@ import edu.patrones.demo.authservice.model.OTP;
 import edu.patrones.demo.authservice.model.dto.OTPRequestDto;
 import edu.patrones.demo.authservice.model.dto.OTPResponseDto;
 import edu.patrones.demo.authservice.service.OTPService;
-import lombok.RequiredArgsConstructor;
+import edu.patrones.demo.dto.SolicitudDto;
 import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.utility.RandomString;
+import org.apache.camel.ProducerTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
-@RequiredArgsConstructor
 @Slf4j
 public class OTPController {
-    private final OTPService service;
+
+    @Autowired
+    private OTPService service;
+
+    @Autowired
+    private ProducerTemplate producerTemplate;
 
     @PostMapping("/otp")
     public ResponseEntity<?> saveOTP(@RequestBody final OTPRequestDto dto){
@@ -35,4 +46,17 @@ public class OTPController {
         return ResponseEntity.ok().body(new OTPResponseDto(dto.getUsername(), ""));
     }
 
+    @PostMapping(value = "/solicitud")
+    public ResponseEntity<String> fileApplication(@RequestBody SolicitudDto solicitudDto){
+        producerTemplate.start();
+        InputStream inputStream = producerTemplate.requestBody("direct:solicitudPrestamo", solicitudDto, InputStream.class);
+        producerTemplate.stop();
+
+        String respuesta = new BufferedReader(
+                new InputStreamReader(inputStream, StandardCharsets.UTF_8))
+                .lines()
+                .collect(Collectors.joining("\n"));
+
+        return ResponseEntity.ok().body(respuesta);
+    }
 }

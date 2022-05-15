@@ -39,6 +39,8 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
         } else {
             String authorizationHeader = request.getHeader(AUTHORIZATION);
 
+            log.info("Authorization Header {}", authorizationHeader);
+
             if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")){
                 try {
                     String token = authorizationHeader.substring("Bearer ".length());
@@ -57,8 +59,11 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
 
                     SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
 
+                    log.info("Token Decode {} ", username);
+
                     filterChain.doFilter(request, response);
                 } catch (Exception e){
+                    e.printStackTrace();
                     log.error("Error: {}", e.getMessage());
                     response.setHeader("error", e.getMessage());
                     //response.sendError(FORBIDDEN.value());
