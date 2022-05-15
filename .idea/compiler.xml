@@ -12,6 +12,7 @@
         <module name="auth-service" />
         <module name="centrales-service" />
         <module name="common-dto" />
+        <module name="gateway-service" />
         <module name="solicitud-service" />
         <module name="estudio-solicitud-service" />
         <module name="hello-world" />
@@ -19,7 +20,6 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="gateway-service" target="11" />
       <module name="hellow-world" target="11" />
     </bytecodeTargetLevel>
   </component>
