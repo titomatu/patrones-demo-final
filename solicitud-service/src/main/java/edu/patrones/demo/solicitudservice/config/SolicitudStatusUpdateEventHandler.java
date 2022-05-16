@@ -3,24 +3,23 @@ package edu.patrones.demo.solicitudservice.config;
 import edu.patrones.demo.dto.ClienteDto;
 import edu.patrones.demo.dto.SolicitudDto;
 import edu.patrones.demo.event.aportes.AportesLineaStatus;
-import edu.patrones.demo.event.centrales.CentralesEvent;
 import edu.patrones.demo.event.centrales.CentralesStatus;
-import edu.patrones.demo.event.rnec.RNECEvent;
+import edu.patrones.demo.event.estudio.EstudioStatus;
 import edu.patrones.demo.event.rnec.RNECStatus;
 import edu.patrones.demo.event.solicitud.SolicitudStatus;
 import edu.patrones.demo.solicitudservice.model.Solicitud;
 import edu.patrones.demo.solicitudservice.repository.SolicitudRepository;
 import edu.patrones.demo.solicitudservice.service.SolicitudStatusPublisher;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 import java.util.function.Consumer;
 
 @Service
+@Slf4j
 public class SolicitudStatusUpdateEventHandler {
 
     @Autowired
@@ -38,21 +37,30 @@ public class SolicitudStatusUpdateEventHandler {
     }
 
     private void updateSolicitud(Solicitud solicitud){
-        System.out.println(">>>>>>>>>>>>>>>>>>> update solicitud " + solicitud.getCentralesStatus() + "/" + solicitud.getRnecStatus()+"/"+solicitud.getAportesLineaStatus());
+        log.warn("UPDATE SOLICITUD {} - {} - {} - {}",solicitud.getCentralesStatus(), solicitud.getRnecStatus(), solicitud.getAportesLineaStatus(), solicitud.getEstudioStatus());
         if(Objects.isNull(solicitud.getCentralesStatus())
                 || Objects.isNull(solicitud.getRnecStatus())
-                || Objects.isNull(solicitud.getAportesLineaStatus()))
+                || Objects.isNull(solicitud.getAportesLineaStatus())
+                || Objects.isNull(solicitud.getEstudioStatus()))
             return;
 
         var isComplete = RNECStatus.RNEC_COMPLETADO.equals(solicitud.getRnecStatus())
                 && CentralesStatus.CENTRALES_COMPLETADO.equals(solicitud.getCentralesStatus())
                 && AportesLineaStatus.APORTES_LINEA_VALIDADO.equals(solicitud.getAportesLineaStatus());
 
+        var isTerminada = isComplete && !EstudioStatus.ESTUDIO_PENDIENTE.equals(solicitud.getEstudioStatus());
+
         var solicitudStatus = isComplete ? SolicitudStatus.SOLICITUD_COMPLETA : SolicitudStatus.SOLICITUD_RECHAZADA;
         solicitud.setSolicitudStatus(solicitudStatus);
 
-        if (!isComplete){
+        if(isTerminada){
+            var terminadaStatus = EstudioStatus.ESTUDIO_APROBADO.equals(solicitud.getEstudioStatus()) ?
+                    SolicitudStatus.SOLICITUD_APROBADA : SolicitudStatus.SOLICITUD_RECHAZADA;
+            solicitud.setSolicitudStatus(terminadaStatus);
+            log.warn("SOLICITUD TERMINADA");
+        } else {
             this.publisher.publishSolicitudEvent(convertEntityToDto(solicitud), solicitudStatus);
+            log.warn("REQUEST ESTUDIO SOLICITUD");
         }
     }
 

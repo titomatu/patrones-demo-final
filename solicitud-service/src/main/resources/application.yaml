@@ -2,7 +2,7 @@ server:
   port: 8085
 spring.cloud.stream:
   function:
-    definition: solicitudSupplier;rnecEventConsumer;centralesEventConsumer;aportesLineaEventConsumer
+    definition: solicitudSupplier;rnecEventConsumer;centralesEventConsumer;aportesLineaEventConsumer;estudioSolicitudConsumer
   bindings:
     solicitudSupplier-out-0:
       destination: solicitud-event
@@ -12,3 +12,5 @@ spring.cloud.stream:
       destination: centrales-event
     aportesLineaEventConsumer-in-0:
       destination: aportes-linea-event
+    estudioSolicitudConsumer-in-0:
+      destination: estudio-solicitud-event

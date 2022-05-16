@@ -3,6 +3,7 @@ package edu.patrones.demo.solicitudservice.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import edu.patrones.demo.event.aportes.AportesLineaStatus;
 import edu.patrones.demo.event.centrales.CentralesStatus;
+import edu.patrones.demo.event.estudio.EstudioStatus;
 import edu.patrones.demo.event.rnec.RNECStatus;
 import edu.patrones.demo.event.solicitud.SolicitudStatus;
 import lombok.AllArgsConstructor;
@@ -47,6 +48,10 @@ public class Solicitud {
     @Enumerated(EnumType.STRING)
     @Column(name = "informacion_centrales")
     private CentralesStatus centralesStatus;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "estado_estudio")
+    private EstudioStatus estudioStatus;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "aportes_en_linea")

@@ -2,6 +2,7 @@ package edu.patrones.demo.solicitudservice.config;
 
 import edu.patrones.demo.event.aportes.AportesLineaEvent;
 import edu.patrones.demo.event.centrales.CentralesEvent;
+import edu.patrones.demo.event.estudio.EstudioEvent;
 import edu.patrones.demo.event.rnec.RNECEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -44,4 +45,12 @@ public class EventHandlersConfig {
         };
     }
 
+    @Bean
+    public Consumer<EstudioEvent> estudioSolicitudConsumer(){
+        return estudioEvent -> {
+            orderEventHandler.updateSolicitud(estudioEvent.getEstudioRequestDto().getSolicitudDto().getNumeroSolicitud(), solicitud -> {
+                solicitud.setEstudioStatus(estudioEvent.getEstudioStatus());
+            });
+        };
+    }
 }

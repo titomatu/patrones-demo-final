@@ -28,7 +28,7 @@ public class RegistraduriaConfig {
             return Mono.fromSupplier(() -> this.service.nuevaSolicitud(event));
         }
 
-        return Mono.fromRunnable(() -> this.service.nuevaSolicitud(event));
+        return Mono.fromRunnable(() -> Mono.empty());
     }
 
 }

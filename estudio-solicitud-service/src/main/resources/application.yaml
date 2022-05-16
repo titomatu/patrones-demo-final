@@ -1,0 +1,8 @@
+spring.cloud.stream:
+  function:
+    definition: estudioProcessor
+  bindings:
+    estudioProcessor-in-0:
+      destination: solicitud-event
+    estudioProcessor-out-0:
+      destination: estudio-solicitud-event

@@ -1,7 +1,7 @@
-package edu.patrones.demo.centralesservice.config;
+package edu.patrones.demo.estudiosolicitudservice.config;
 
-import edu.patrones.demo.centralesservice.service.CentralesService;
-import edu.patrones.demo.event.centrales.CentralesEvent;
+import edu.patrones.demo.estudiosolicitudservice.service.EstudioService;
+import edu.patrones.demo.event.estudio.EstudioEvent;
 import edu.patrones.demo.event.solicitud.SolicitudEvent;
 import edu.patrones.demo.event.solicitud.SolicitudStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,18 +13,18 @@ import reactor.core.publisher.Mono;
 import java.util.function.Function;
 
 @Configuration
-public class CentralesConfig {
+public class EstudioConfig {
 
     @Autowired
-    private CentralesService service;
+    private EstudioService service;
 
     @Bean
-    public Function<Flux<SolicitudEvent>, Flux<CentralesEvent>> centralesProcessor() {
-        return flux -> flux.flatMap(this::procesarCentrales);
+    public Function<Flux<SolicitudEvent>, Flux<EstudioEvent>> estudioProcessor() {
+        return flux -> flux.flatMap(this::procesarEstudio);
     }
 
-    private Mono<CentralesEvent> procesarCentrales(SolicitudEvent event){
-        if(event.getSolicitudStatus().equals(SolicitudStatus.SOLICITUD_CREADA)){
+    private Mono<EstudioEvent> procesarEstudio(SolicitudEvent event){
+        if(event.getSolicitudStatus().equals(SolicitudStatus.SOLICITUD_COMPLETA)){
             return Mono.fromSupplier(() -> this.service.nuevaSolicitud(event));
         } else {
             return Mono.fromRunnable(() -> Mono.empty());
@@ -32,4 +32,3 @@ public class CentralesConfig {
     }
 
 }
-

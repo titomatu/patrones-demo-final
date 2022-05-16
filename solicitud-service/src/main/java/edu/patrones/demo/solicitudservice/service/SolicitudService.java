@@ -1,6 +1,7 @@
 package edu.patrones.demo.solicitudservice.service;
 
 import edu.patrones.demo.dto.SolicitudDto;
+import edu.patrones.demo.event.estudio.EstudioStatus;
 import edu.patrones.demo.event.solicitud.SolicitudStatus;
 import edu.patrones.demo.solicitudservice.model.Cliente;
 import edu.patrones.demo.solicitudservice.model.Solicitud;
@@ -74,6 +75,7 @@ public class SolicitudService {
         solicitud.setCliente(cliente);
         solicitud.setValorSolicitado(solicitudDto.getValorSolicitado());
         solicitud.setSolicitudStatus(SolicitudStatus.SOLICITUD_CREADA);
+        solicitud.setEstudioStatus(EstudioStatus.ESTUDIO_PENDIENTE);
 
         return solicitud;
     }
