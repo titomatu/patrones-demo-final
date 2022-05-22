@@ -1,0 +1,177 @@
+import edu.patrones.demo.dto.MotorReglaRequestDto;
+import edu.patrones.demo.dto.MotorReglaResponseDto;
+
+dialect  "mvel"
+rule "tipoDocumento"
+lock-on-active true
+    when
+        orderObject : MotorReglaRequestDto( tipoDocumento=="" || tipoDocumento==null);
+    then
+        orderObject.setMensajeE("TIPO DOCUMENTO INVALIDO");
+	     modify(orderObject){setValorAprobado(0.0) }
+	     modify(orderObject){setCodeRespuesta(1100)}
+end;
+
+dialect  "mvel"
+rule "numeroDocumento"
+    when
+        orderObject : MotorReglaRequestDto( numeroDocumento==0 || numeroDocumento==null);
+    then
+        orderObject.setMensajeE("NUMERO DE DOCUMENTO INVALIDO");
+	     modify(orderObject){
+	      setValorAprobado(0.0)
+	     }
+	     modify(orderObject){
+	      setCodeRespuesta(1200)
+	     }        
+end;
+
+dialect  "mvel"
+rule "fechaExpedicion"
+no-loop
+    when
+        orderObject : MotorReglaRequestDto( fechaExpedicion==0 || fechaExpedicion==null);
+    then
+        orderObject.setMensajeE("FECHA EXPEDICION DCTO NO PUEDE SER VACIA O NULA");
+	     modify(orderObject){
+	      setValorAprobado(0.0)
+	     }
+	     modify(orderObject){
+	      setCodeRespuesta(1300)
+	     }        
+end;
+
+dialect  "mvel"
+rule "fechaNacimiento"
+no-loop
+    when
+        orderObject : MotorReglaRequestDto( fechaNacimiento==0 || fechaNacimiento==null || fechaNacimiento=="");
+    then 
+        orderObject.setMensajeE("FECHA NACIMIENTO NO PUEDE SER VACIA O NULA");
+	     modify(orderObject){
+	      setValorAprobado(0.0)
+	     }
+	     modify(orderObject){
+	      setCodeRespuesta(1400)
+	     }        
+end;
+
+dialect  "mvel"
+rule "fechaExpedicion menor o igual a fechaNacimiento"
+no-loop
+    when
+        orderObject : MotorReglaRequestDto( fechaExpedicion==fechaNacimiento || fechaExpedicion<=fechaNacimiento);
+    then 
+        orderObject.setMensajeE("FECHA EXPEDICION DCTO NO PUEDE SER MENOR O IGUAL A LA FEHCA DE NACIMIENTO");
+	     modify(orderObject){
+	      setValorAprobado(0.0)
+	     }
+	     modify(orderObject){
+	      setCodeRespuesta(1500)
+	     }        
+end;
+
+dialect  "mvel" /*PERMITE REALIZAR MODIFICACIONES A LA VARIABLE DE SALIDA EN ESTE CASO MULTIPLICAR EN VALOR*/
+rule "SalarioMensual menor al minimo"
+no-loop  /*PERMITE QUE SE EJECUTE HASTA CUANDO CUMPLA LA CONDICION*/
+    when
+        orderObject : MotorReglaRequestDto( salarioMensual<1000000);
+    then 
+    	 orderObject.setMensajeE("VALOR SALARIO MENOR AL MINIMO REQUERIDO");
+	     modify(orderObject){
+	      setValorAprobado(0.0)
+	     }
+	     modify(orderObject){
+	      setCodeRespuesta(1600)
+	     }	     
+end;
+
+dialect  "mvel" /*PERMITE REALIZAR MODIFICACIONES A LA VARIABLE DE SALIDA EN ESTE CASO MULTIPLICAR EN VALOR*/
+rule "salarioaporte menor al minimo"
+no-loop  /*PERMITE QUE SE EJECUTE HASTA CUANDO CUMPLA LA CONDICION*/
+    when
+        orderObject : MotorReglaRequestDto( salarioAportes<1000000);
+    then 
+    	 orderObject.setMensajeE("VALOR SALARIO MENOR AL MINIMO REQUERIDO");
+	     modify(orderObject){
+	      setValorAprobado(0.0)
+	     }
+	     modify(orderObject){
+	      setCodeRespuesta(1700)
+	     }	     
+end;
+
+dialect  "mvel" /*PERMITE REALIZAR MODIFICACIONES A LA VARIABLE DE SALIDA EN ESTE CASO MULTIPLICAR EN VALOR*/
+rule "SalarioMensual igual a salarioaporte"
+no-loop /*PERMITE QUE SE EJECUTE HASTA CUANDO CUMPLA LA CONDICION*/
+    when
+        orderObject : MotorReglaRequestDto( salarioMensual==salarioAportes);
+    then 
+         orderObject.setMensajeE("TRANSACCION EXITOSA");
+	     modify(orderObject){
+	      setValorAprobado(orderObject.salarioMensual * 3.75)
+	     }
+	     modify(orderObject){
+	      setCodeRespuesta(0)
+	     }	     
+end;
+
+dialect  "mvel" /*PERMITE REALIZAR MODIFICACIONES A LA VARIABLE DE SALIDA EN ESTE CASO MULTIPLICAR EN VALOR*/
+rule "SalarioMensual menor a salarioaporte"
+no-loop  /*PERMITE QUE SE EJECUTE HASTA CUANDO CUMPLA LA CONDICION*/
+    when
+        orderObject : MotorReglaRequestDto( salarioMensual>salarioAportes && salarioAportes>=3000000);
+    then 
+         orderObject.setMensajeE("TRANSACCION EXITOSA");
+	     modify(orderObject){
+	      setValorAprobado(orderObject.salarioAportes * 2.75)
+	     }
+	     modify(orderObject){
+	      setCodeRespuesta(0)
+	     }
+end;
+
+dialect  "mvel" /*PERMITE REALIZAR MODIFICACIONES A LA VARIABLE DE SALIDA EN ESTE CASO MULTIPLICAR EN VALOR*/
+rule "SalarioMensual menor a salarioMensual"
+no-loop  /*PERMITE QUE SE EJECUTE HASTA CUANDO CUMPLA LA CONDICION*/
+    when
+        orderObject : MotorReglaRequestDto( salarioMensual<salarioAportes && salarioAportes>=3000000);
+    then 
+         orderObject.setMensajeE("TRANSACCION EXITOSA");
+	     modify(orderObject){
+	      setValorAprobado(orderObject.salarioMensual * 2.85)
+	     }
+	     modify(orderObject){
+	      setCodeRespuesta(0)
+	     }
+end;
+
+dialect  "mvel" /*PERMITE REALIZAR MODIFICACIONES A LA VARIABLE DE SALIDA EN ESTE CASO MULTIPLICAR EN VALOR*/
+rule "SalarioMensual entre 1 MM y 3 MM"
+no-loop  /*PERMITE QUE SE EJECUTE HASTA CUANDO CUMPLA LA CONDICION*/
+    when
+        orderObject : MotorReglaRequestDto( salarioMensual>=1000000 && salarioMensual<3000000);
+    then 
+         orderObject.setMensajeE("TRANSACCION EXITOSA");
+	     modify(orderObject){
+	      setValorAprobado(orderObject.salarioMensual * 0.95)
+	     }
+	     modify(orderObject){
+	      setCodeRespuesta(0)
+	     }
+end;
+
+dialect  "mvel" /*PERMITE REALIZAR MODIFICACIONES A LA VARIABLE DE SALIDA EN ESTE CASO MULTIPLICAR EN VALOR*/
+rule "salarioAportes entre 1 MM y 3 MM"
+no-loop  /*PERMITE QUE SE EJECUTE HASTA CUANDO CUMPLA LA CONDICION*/
+    when
+        orderObject : MotorReglaRequestDto( salarioAportes>=1000000 && salarioAportes<3000000);
+    then 
+         orderObject.setMensajeE("TRANSACCION EXITOSA");
+	     modify(orderObject){
+	      setValorAprobado(orderObject.salarioMensual * 0.95)
+	     }
+	     modify(orderObject){
+	      setCodeRespuesta(0)
+	     }
+end;
