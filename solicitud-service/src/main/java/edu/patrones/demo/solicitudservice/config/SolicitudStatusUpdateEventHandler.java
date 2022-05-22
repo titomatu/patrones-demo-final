@@ -72,6 +72,8 @@ public class SolicitudStatusUpdateEventHandler {
         clienteDto.setTipoDocumento(solicitud.getCliente().getClienteId().getTipoDocumento());
         solicitudDto.setClienteDto(clienteDto);
         solicitudDto.setNumeroSolicitud(solicitud.getNumeroSolicitud());
+        solicitudDto.setReportado(solicitud.getReportado());
+        solicitudDto.setPromedioAportes(solicitud.getPromedioAportes());
 
         return solicitudDto;
     }
