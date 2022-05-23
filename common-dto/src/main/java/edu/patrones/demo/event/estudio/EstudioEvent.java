@@ -1,6 +1,7 @@
 package edu.patrones.demo.event.estudio;
 
 import edu.patrones.demo.dto.EstudioRequestDto;
+import edu.patrones.demo.dto.MotorReglaResponseDto;
 import edu.patrones.demo.event.Event;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,12 +17,14 @@ public class EstudioEvent implements Event {
 
     private EstudioRequestDto estudioRequestDto;
     private EstudioStatus estudioStatus;
+    private MotorReglaResponseDto motorReglaResponseDto;
 
     //
 
 
-    public EstudioEvent(EstudioRequestDto estudioRequestDto, EstudioStatus estudioStatus) {
+    public EstudioEvent(EstudioRequestDto estudioRequestDto, MotorReglaResponseDto motorReglaResponseDto, EstudioStatus estudioStatus) {
         this.estudioRequestDto = estudioRequestDto;
+        this.motorReglaResponseDto = motorReglaResponseDto;
         this.estudioStatus = estudioStatus;
     }
 

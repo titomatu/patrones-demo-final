@@ -7,9 +7,11 @@ import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/api")
 public class ReglasNegocioController {
     private final KieContainer kieContainer;
 
@@ -18,7 +20,7 @@ public class ReglasNegocioController {
     }
 
 
-    @PostMapping("/descuento")
+    @PostMapping("/motor")
     private MotorReglaResponseDto getDiscountPercent(@RequestBody MotorReglaRequestDto orderRequest) {
         MotorReglaResponseDto respuesta = new  MotorReglaResponseDto();
         KieSession kieSession = kieContainer.newKieSession();

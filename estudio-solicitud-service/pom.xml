@@ -81,6 +81,12 @@
             <artifactId>camel-jackson-starter</artifactId>
             <version>3.0.0-RC3</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.json/json -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20220320</version>
+        </dependency>
 
         <dependency>
             <groupId>edu.patrones.demo</groupId>
