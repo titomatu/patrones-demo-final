@@ -24,7 +24,7 @@ public class SolicitudPrestamoRoute extends RouteBuilder {
                 .marshal()
                 .json(JsonLibrary.Jackson)
                 .log(">>> ${body}")
-                .to("http://localhost:8087/api/otp")
+                .to("http://localhost:8089/api/mail")
                 .end();
     }
 }
