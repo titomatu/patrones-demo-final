@@ -50,6 +50,7 @@ public class EventHandlersConfig {
         return estudioEvent -> {
             orderEventHandler.updateSolicitud(estudioEvent.getEstudioRequestDto().getSolicitudDto().getNumeroSolicitud(), solicitud -> {
                 solicitud.setEstudioStatus(estudioEvent.getEstudioStatus());
+                solicitud.setValorAprobado(estudioEvent.getMotorReglaResponseDto().getValorAprobado());
             });
         };
     }

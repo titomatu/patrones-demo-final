@@ -27,7 +27,7 @@ public class Solicitud {
     private Double valorSolicitado;
 
     @Column(name = "valor_aprobado")
-    private Double valorAprobado;
+    private Long valorAprobado;
 
     @ManyToOne
     @JoinColumns({
