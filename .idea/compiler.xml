@@ -11,6 +11,7 @@
         <module name="auth-service" />
         <module name="centrales-service" />
         <module name="common-dto" />
+        <module name="email-service" />
         <module name="solicitud-service" />
         <module name="common-dtos" />
         <module name="estudio-solicitud-service" />
@@ -27,6 +28,7 @@
       <module name="aportes-linea-service" options="-parameters" />
       <module name="auth-service" options="-parameters" />
       <module name="centrales-service" options="-parameters" />
+      <module name="email-service" options="-parameters" />
       <module name="estudio-solicitud-service" options="-parameters" />
       <module name="motor-reglas-service" options="-parameters" />
       <module name="registraduria-service" options="-parameters" />

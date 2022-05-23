@@ -1,4 +1,4 @@
-package edu.patrones.demo.authservice.model.dto;
+package edu.patrones.demo.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,4 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class OTPRequestDto {
     private String username;
+    private String correo;
 }
