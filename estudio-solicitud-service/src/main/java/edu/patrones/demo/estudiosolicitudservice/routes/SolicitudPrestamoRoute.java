@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class SolicitudPrestamoRoute extends RouteBuilder {
     @Override
-    public void configure() throws Exception {
+    public void configure(){
 
         from("direct:motor")
                 .routeId("direct-motor")
