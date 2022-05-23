@@ -16,5 +16,15 @@ public class SolicitudPrestamoRoute extends RouteBuilder {
                 .log(">>> ${body}")
                 .to("http://localhost:8085/solicitud/radicar")
                 .end();
+
+
+        from("direct:correo")
+                .routeId("direct-correo")
+                .tracing()
+                .marshal()
+                .json(JsonLibrary.Jackson)
+                .log(">>> ${body}")
+                .to("http://localhost:8087/api/otp")
+                .end();
     }
 }
