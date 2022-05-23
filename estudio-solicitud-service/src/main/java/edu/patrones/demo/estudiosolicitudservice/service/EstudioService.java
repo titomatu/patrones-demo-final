@@ -65,6 +65,6 @@ public class EstudioService {
 
         log.warn("Respuesta Motor Reglas: " + motorReglaResponseDto);
 
-        return new EstudioEvent(estudioRequestDto, motorReglaResponseDto, EstudioStatus.ESTUDIO_APROBADO);
+        return new EstudioEvent(estudioRequestDto, motorReglaResponseDto, motorReglaResponseDto.getCodeRespuesta() == 0? EstudioStatus.ESTUDIO_APROBADO : EstudioStatus.ESTUDIO_NO_APROBADO);
     }
 }

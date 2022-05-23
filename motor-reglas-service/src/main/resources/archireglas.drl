@@ -35,7 +35,7 @@ dialect  "mvel"
 rule "fechaExpedicion"
 no-loop
     when
-        orderObject : MotorReglaRequestDto( fechaExpedicion=="0" || fechaNacimiento==null);
+        orderObject : MotorReglaRequestDto( fechaNacimiento==null);
     then
         orderObject.setMensajeE("FECHA EXPEDICION DCTO NO PUEDE SER VACIA O NULA");
 	     modify(orderObject){
@@ -50,7 +50,7 @@ dialect  "mvel"
 rule "fechaNacimiento"
 no-loop
     when
-        orderObject : MotorReglaRequestDto( fechaNacimiento=="0" || fechaNacimiento==null || fechaNacimiento=="");
+        orderObject : MotorReglaRequestDto( fechaNacimiento==null );
     then
         orderObject.setMensajeE("FECHA NACIMIENTO NO PUEDE SER VACIA O NULA");
 	     modify(orderObject){
@@ -99,7 +99,7 @@ no-loop
     when
         orderObject : MotorReglaRequestDto( orderObject.getNumeroSolicitud()=="" || orderObject.getNumeroSolicitud()==null);
     then
-    System.out.println("AQUI LLEGOOOO-3 " + orderObject.getTipoDocumento());
+    //System.out.println("AQUI LLEGOOOO-3 " + orderObject.getTipoDocumento());
         orderObject.setMensajeE("NUMERO DE SOLICITUD INVALIDO");
 	     modify(orderObject){setValorAprobado(0.0) }
 	     modify(orderObject){setCodeRespuesta(1100)}
@@ -141,6 +141,7 @@ no-loop /*PERMITE QUE SE EJECUTE HASTA CUANDO CUMPLA LA CONDICION*/
     when
         orderObject : MotorReglaRequestDto( salarioMensual==salarioAportes);
     then
+    //System.out.println("AQUI LLEGOOOO-5 " + orderObject.getSalarioMensual());
          orderObject.setMensajeE("TRANSACCION EXITOSA");
 	     modify(orderObject){
 	      setValorAprobado(orderObject.salarioMensual * 3.75)
@@ -156,6 +157,7 @@ no-loop  /*PERMITE QUE SE EJECUTE HASTA CUANDO CUMPLA LA CONDICION*/
     when
         orderObject : MotorReglaRequestDto( salarioMensual>salarioAportes && salarioAportes>=3000000);
     then
+    //System.out.println("AQUI LLEGOOOO-4 " + orderObject.getSalarioMensual());
          orderObject.setMensajeE("TRANSACCION EXITOSA");
 	     modify(orderObject){
 	      setValorAprobado(orderObject.salarioAportes * 2.75)
@@ -185,7 +187,7 @@ dialect  "mvel" /*PERMITE REALIZAR MODIFICACIONES A LA VARIABLE DE SALIDA EN EST
 rule "SalarioMensual entre 1 MM y 3 MM"
 no-loop  /*PERMITE QUE SE EJECUTE HASTA CUANDO CUMPLA LA CONDICION*/
     when
-        orderObject : MotorReglaRequestDto( (salarioMensual>=1000000 && salarioMensual<3000000) && salarioAportes>3000000);
+        orderObject : MotorReglaRequestDto( (salarioMensual>=1000000 && salarioAportes<3000000) && salarioMensual>3000000);
     then
     //System.out.println("AQUI LLEGOOOO-2 " + orderObject.getSalarioMensual());
          orderObject.setMensajeE("TRANSACCION EXITOSA");
@@ -206,7 +208,7 @@ no-loop  /*PERMITE QUE SE EJECUTE HASTA CUANDO CUMPLA LA CONDICION*/
     //System.out.println("AQUI LLEGOOOO-3 " + orderObject.getSalarioMensual());
          orderObject.setMensajeE("TRANSACCION EXITOSA");
 	     modify(orderObject){
-	      setValorAprobado(orderObject.salarioAportes * 0.95)
+	      setValorAprobado(orderObject.salarioAportes * 0.85)
 	     }
 	     modify(orderObject){
 	      setCodeRespuesta(0)
