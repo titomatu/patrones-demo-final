@@ -1,9 +1,10 @@
 package edu.patrones.demo.authservice.controller;
 
 import edu.patrones.demo.authservice.model.OTP;
-import edu.patrones.demo.authservice.model.dto.OTPRequestDto;
-import edu.patrones.demo.authservice.model.dto.OTPResponseDto;
+import edu.patrones.demo.dto.OTPRequestDto;
+import edu.patrones.demo.dto.OTPResponseDto;
 import edu.patrones.demo.authservice.service.OTPService;
+import edu.patrones.demo.dto.EmailDto;
 import edu.patrones.demo.dto.SolicitudDto;
 import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.utility.RandomString;
@@ -37,11 +38,25 @@ public class OTPController {
     public ResponseEntity<?> saveOTP(@RequestBody final OTPRequestDto dto){
         OTP otp = new OTP();
 
+        log.warn("Username {}", dto.getUsername());
+
+        String otpGen = RandomString.make(8);
+
         otp.setUsername(dto.getUsername());
-        otp.setPassword(RandomString.make(8));
+        otp.setPassword(otpGen);
         otp.setOtpRequestedTime(new Date());
         log.info("Usuario: {} - OTP Generada: {}", otp.getUsername(), otp.getPassword());
         service.saveOTP(otp);
+
+        EmailDto emailDto = new EmailDto();
+
+        emailDto.setTo(dto.getCorreo());
+        emailDto.setSubject("Clave OTP Generada");
+        emailDto.setText("Se ha generado la clave temporal de acceso: " + otpGen);
+
+        producerTemplate.start();
+        producerTemplate.requestBody("direct:correo", emailDto, InputStream.class);
+        producerTemplate.stop();
 
         return ResponseEntity.ok().body(new OTPResponseDto(dto.getUsername(), ""));
     }

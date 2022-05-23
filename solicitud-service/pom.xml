@@ -71,6 +71,31 @@
             <artifactId>spring-kafka-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.camel/camel-http-starter -->
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-http-starter</artifactId>
+            <version>3.0.0-RC3</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.camel/camel-servlet-starter -->
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-servlet-starter</artifactId>
+            <version>3.0.0-RC3</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.camel/camel-jackson-starter -->
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-jackson-starter</artifactId>
+            <version>3.0.0-RC3</version>
+        </dependency>
+
         <dependency>
             <groupId>edu.patrones.demo</groupId>
             <artifactId>common-dtos</artifactId>
