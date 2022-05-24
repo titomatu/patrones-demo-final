@@ -10,6 +10,7 @@
         <module name="registraduria-service" />
         <module name="auth-service" />
         <module name="centrales-service" />
+        <module name="web-appliocation" />
         <module name="common-dto" />
         <module name="email-service" />
         <module name="solicitud-service" />
@@ -21,6 +22,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="motor-reglas" target="11" />
+      <module name="web-application" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -33,6 +35,8 @@
       <module name="motor-reglas-service" options="-parameters" />
       <module name="registraduria-service" options="-parameters" />
       <module name="solicitud-service" options="-parameters" />
+      <module name="web-application" options="-parameters" />
+      <module name="web-appliocation" options="-parameters" />
     </option>
   </component>
 </project>
