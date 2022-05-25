@@ -18,6 +18,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.InputStream;
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.function.Consumer;
 
@@ -65,10 +67,11 @@ public class SolicitudStatusUpdateEventHandler {
             solicitud.setSolicitudStatus(terminadaStatus);
 
             EmailDto emailDto = new EmailDto();
+            NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.US);
 
             emailDto.setTo(solicitud.getCliente().getCorreoElectronico());
             emailDto.setSubject("Respuesta Solicitud Crédito");
-            emailDto.setText("La respuesta de su solicitud de credito es: " + solicitud.getSolicitudStatus() + " por un valor de: " + solicitud.getValorAprobado());
+            emailDto.setText("La respuesta de su solicitud de credito es: " + solicitud.getSolicitudStatus() + " por un valor de: " + nf.format(solicitud.getValorAprobado()));
 
             producerTemplate.start();
             producerTemplate.requestBody("direct:correo", emailDto, InputStream.class);
