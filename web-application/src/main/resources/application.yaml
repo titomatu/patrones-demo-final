@@ -1,0 +1,4 @@
+feign:
+  client:
+    url:
+        otp: http://localhost:8087/api/otp
