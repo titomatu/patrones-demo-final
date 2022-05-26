@@ -7,11 +7,13 @@ import edu.patrones.demo.event.rnec.RNECStatus;
 import edu.patrones.demo.event.solicitud.SolicitudEvent;
 import edu.patrones.demo.registraduriaservice.model.RNECId;
 import edu.patrones.demo.registraduriaservice.repository.RNECRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Slf4j
 public class RNECService {
 
     @Autowired
@@ -23,6 +25,7 @@ public class RNECService {
 
         RNECRequestDto rnecRequestDto = new RNECRequestDto(solicitudDto.getNumeroSolicitud());
 
+        log.warn("Tipo Doc {} Num Doc {}",solicitudDto.getClienteDto().getTipoDocumento(), solicitudDto.getClienteDto().getNumeroDocumento());
         if(rnecRepository.findById(new RNECId(solicitudDto.getClienteDto().getTipoDocumento(), solicitudDto.getClienteDto().getNumeroDocumento()))
                 .isPresent())
             return new RNECEvent(rnecRequestDto, RNECStatus.RNEC_COMPLETADO);

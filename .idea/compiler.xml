@@ -13,6 +13,7 @@
         <module name="common-dto" />
         <module name="email-service" />
         <module name="solicitud-service" />
+        <module name="common-dtos" />
         <module name="estudio-solicitud-service" />
         <module name="aportes-linea-service" />
         <module name="motor-reglas-service" />

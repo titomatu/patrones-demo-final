@@ -61,7 +61,7 @@ public class SolicitudStatusUpdateEventHandler {
         var solicitudStatus = isComplete ? SolicitudStatus.SOLICITUD_COMPLETA : SolicitudStatus.SOLICITUD_RECHAZADA;
         solicitud.setSolicitudStatus(solicitudStatus);
 
-        if(isTerminada){
+        if(isTerminada || SolicitudStatus.SOLICITUD_RECHAZADA.equals(solicitud.getSolicitudStatus())){
             var terminadaStatus = EstudioStatus.ESTUDIO_APROBADO.equals(solicitud.getEstudioStatus()) ?
                     SolicitudStatus.SOLICITUD_APROBADA : SolicitudStatus.SOLICITUD_RECHAZADA;
             solicitud.setSolicitudStatus(terminadaStatus);
